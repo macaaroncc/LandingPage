@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Landing Page - Hola Mundo</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <header>
+        <nav>
+            <div class="logo">
+                <h2>Mi Landing Page</h2>
+            </div>
+            <ul class="nav-links">
+                <li><a href="#inicio">Inicio</a></li>
+                <li><a href="#acerca">Acerca</a></li>
+                <li><a href="#contacto">Contacto</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section id="inicio" class="hero">
+            <div class="hero-content">
+                <h1 class="hero-title">¡Hola Mundo!</h1>
+                <p class="hero-subtitle">Bienvenido a mi hermosa landing page</p>
+                <button class="cta-button" onclick="saludar()">¡Saludar!</button>
+            </div>
+            <div class="hero-image">
+                <div class="placeholder-image">🌍</div>
+            </div>
+        </section>
+
+        <section id="acerca" class="about">
+            <div class="container">
+                <h2>Acerca de nosotros</h2>
+                <p>Esta es una landing page simple y bonita creada con HTML, CSS y JavaScript.</p>
+                <div class="features">
+                    <div class="feature">
+                        <h3>🎨 Diseño Moderno</h3>
+                        <p>Interface limpia y atractiva</p>
+                    </div>
+                    <div class="feature">
+                        <h3>📱 Responsive</h3>
+                        <p>Se adapta a todos los dispositivos</p>
+                    </div>
+                    <div class="feature">
+                        <h3>⚡ Rápido</h3>
+                        <p>Optimizado para velocidad</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="contacto" class="contact">
+            <div class="container">
+                <h2>Contacto</h2>
+                <p>¿Tienes alguna pregunta? ¡No dudes en contactarnos!</p>
+                <button class="contact-button">Enviar mensaje</button>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 Mi Landing Page. Todos los derechos reservados.</p>
+        </div>
+    </footer>
+
+    <script src="js/script.js"></script>
+</body>
+</html>
