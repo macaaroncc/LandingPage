@@ -1,9 +1,9 @@
 // ===== CONFIGURACIÓN Y VARIABLES GLOBALES =====
 const CONFIG = {
     company: {
-        name: 'HostBounty',
+        name: 'VelocityLands',
         phone: '+1 (555) 123-4567',
-        email: 'hola@hostbounty.com',
+        email: 'hola@velocitylands.com',
         whatsapp: '5551234567'
     },
     plans: {
@@ -22,7 +22,7 @@ document.addEventListener('DOMContentLoaded', function() {
     initializeCounters();
     initializeMobileMenu();
     
-console.log('🚀 HostBounty Landing Page cargada correctamente!');
+console.log('⚡ VelocityLands Landing Page cargada correctamente!');
     
     // Debug: Verificar que las funciones están disponibles
     console.log('📝 Funciones disponibles:', {
@@ -124,7 +124,7 @@ function initializeScrollAnimations() {
     
     // Elementos a animar
     const elementsToAnimate = document.querySelectorAll('
-        .service-card, .pricing-card, .testimonial-card, 
+        .service-card, .pricing-card, 
         .step, .section-header, .contact-info, .contact-form
     ');
     
@@ -387,7 +387,7 @@ function cerrarDemo() {
 
 // ===== WHATSAPP Y CONTACTO DIRECTO =====
 function contactarWhatsApp() {
-    const mensaje = encodeURIComponent('¡Hola! Estoy interesado en crear una landing page para mi empresa. ¿Podrían ayudarme?');
+    const mensaje = encodeURIComponent('¡Hola! Estoy interesado en una landing page ultra rápida con VelocityLands. ¿Podrían ayudarme?');
     const whatsappURL = `https://wa.me/${CONFIG.company.whatsapp}?text=${mensaje}`;
     
     window.open(whatsappURL, '_blank');
@@ -749,7 +749,7 @@ document.addEventListener('DOMContentLoaded', function() {
             setTimeout(() => { clickCount = 0; }, 500);
             
             if (clickCount === 2) {
-                showNotification('👨‍💻 Desarrollado con ❤️ por el equipo de HostBounty', 'info');
+                showNotification('👨‍💻 Desarrollado con ⚡ por el equipo de VelocityLands', 'info');
             }
         });
     }
@@ -798,8 +798,8 @@ initializeLazyLoading();
 
 // ===== MANEJO DE ERRORES GLOBAL =====
 window.addEventListener('error', function(e) {
-    console.error('Error en HostBounty Landing Page:', e.error);
+    console.error('Error en VelocityLands Landing Page:', e.error);
     // En producción, enviarías esto a un servicio de monitoring
 });
 
-console.log('✨ HostBounty - Sistema de landing pages profesionales inicializado correctamente');
+console.log('✨ VelocityLands - Landing pages ultrarrápidas inicializadas correctamente');
