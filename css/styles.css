@@ -201,7 +201,11 @@ h4 { font-size: 1.4rem; }
 /* ===== SECCIÓN HERO ===== */
 .hero {
     min-height: 100vh;
-    background: var(--gradient-primary);
+    background: 
+        linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.8)), /* gradient negro semitransparente */
+        url("manoJerseyBlanco.jpeg");
+    background-size: cover;       /* que la imagen ocupe todo */
+    background-position: center;  /* centrado */
     display: flex;
     align-items: center;
     position: relative;
@@ -224,6 +228,7 @@ h4 { font-size: 1.4rem; }
     max-width: 1200px;
     margin: 0 auto;
     padding: 0 20px;
+    padding-top: 30px;
     display: flex;
     align-items: center;
     gap: 4rem;
@@ -237,23 +242,23 @@ h4 { font-size: 1.4rem; }
 }
 
 .hero-title {
-    font-size: 4rem;
+    font-size: 3rem;
     font-weight: 800;
     color: var(--white);
     margin-bottom: 1.5rem;
-    line-height: 1.1;
+    line-height: 1;
     animation: fadeInUp 1s ease-out;
 }
 
 .gradient-text {
-    background: linear-gradient(135deg, #fbbf24, #f59e0b);
+    background: linear-gradient(347deg, #6366f1, #a981d2);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
 }
 
 .highlight {
-    color: var(--secondary-color);
+    color: #6366f1;
     position: relative;
 }
 
@@ -264,10 +269,15 @@ h4 { font-size: 1.4rem; }
     left: 0;
     right: 0;
     height: 3px;
-    background: var(--secondary-color);
+    background: var(--primary-color);
     border-radius: 2px;
 }
-
+.hero-tagline{
+    font-size: 1.2rem;
+    color: rgba(255, 255, 255, 0.9);
+    font-weight: 500;
+    animation: fadeInUp 1s ease-out 0.1s both;
+}
 .hero-subtitle {
     font-size: 1.3rem;
     color: rgba(255, 255, 255, 0.9);
@@ -936,7 +946,7 @@ h4 { font-size: 1.4rem; }
     }
     
     .hero-title {
-        font-size: 2.5rem;
+        font-size: 2rem;
     }
     
     .hero-stats {
@@ -999,7 +1009,7 @@ h4 { font-size: 1.4rem; }
     }
     
     .hero-title {
-        font-size: 2rem;
+        font-size: 2.5rem;
     }
     
     .hero-stats {
@@ -1014,7 +1024,7 @@ h4 { font-size: 1.4rem; }
 
 /* ===== EFECTOS ESPECIALES ===== */
 .gradient-text {
-    background: linear-gradient(135deg, #fbbf24, #f59e0b);
+    background: linear-gradient(347deg, #6366f1, #764ba2);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
