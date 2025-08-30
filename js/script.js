@@ -122,12 +122,6 @@ function initializeScrollAnimations() {
         });
     }, observerOptions);
     
-    // Elementos a animar
-    const elementsToAnimate = document.querySelectorAll('
-        .service-card, .pricing-card, 
-        .step, .section-header, .contact-info, .contact-form
-    ');
-    
     elementsToAnimate.forEach(el => {
         el.classList.add('fade-in');
         observer.observe(el);
@@ -383,19 +377,6 @@ function cerrarDemo() {
         demo.remove();
         document.body.style.overflow = 'auto';
     }
-}
-
-// ===== WHATSAPP Y CONTACTO DIRECTO =====
-function contactarWhatsApp() {
-    const mensaje = encodeURIComponent('¡Hola! Estoy interesado en una landing page ultra rápida con VelocityLands. ¿Podrían ayudarme?');
-    const whatsappURL = `https://wa.me/${CONFIG.company.whatsapp}?text=${mensaje}`;
-    
-    window.open(whatsappURL, '_blank');
-    
-    // Analytics
-    trackEvent('whatsapp_contact', {
-        source: 'cta_button'
-    });
 }
 
 // ===== SISTEMA DE NOTIFICACIONES =====

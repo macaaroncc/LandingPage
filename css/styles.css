@@ -250,7 +250,7 @@ h4 { font-size: 1.4rem; }
     max-width: 1200px;
     margin: 0 auto;
     padding: 0 20px;
-    padding-top: 30px;
+    padding-top: 60px;
     display: flex;
     align-items: center;
     gap: 4rem;
@@ -307,7 +307,7 @@ h4 { font-size: 1.4rem; }
 .hero-subtitle {
     font-size: 1.1rem;
     color: rgba(255, 255, 255, 0.8);
-    margin-bottom: 3rem;
+    margin-bottom: 1.5rem;
     animation: fadeInUp 1s ease-out 0.3s both;
     line-height: 1.6;
     max-width: 500px;
