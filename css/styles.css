@@ -220,6 +220,19 @@ h4 { font-size: 1.4rem; }
     transition: var(--transition);
 }
 
+/* Animación del hamburguesa cuando está activo */
+.hamburger.active .bar:nth-child(1) {
+    transform: rotate(45deg) translate(5px, 6px);
+}
+
+.hamburger.active .bar:nth-child(2) {
+    opacity: 0;
+}
+
+.hamburger.active .bar:nth-child(3) {
+    transform: rotate(-45deg) translate(7px, -8px);
+}
+
 /* ===== SECCIÓN HERO ===== */
 .hero {
     min-height: 100vh;
@@ -963,9 +976,36 @@ h4 { font-size: 1.4rem; }
         background-color: var(--white);
         width: 100%;
         text-align: center;
-        transition: 0.3s;
-        box-shadow: var(--shadow-medium);
+        transition: all 0.3s ease-in-out;
+        box-shadow: var(--shadow-heavy);
         padding: 2rem 0;
+        min-height: calc(100vh - 70px);
+        z-index: 999;
+    }
+    
+    .nav-menu li {
+        margin: 0;
+        padding: 0.5rem 0;
+    }
+    
+    .nav-menu .nav-link {
+        display: block;
+        padding: 1rem 2rem;
+        font-size: 1.1rem;
+        font-weight: 600;
+        color: var(--dark-color);
+        transition: all 0.3s ease;
+        border-bottom: 1px solid #f3f4f6;
+    }
+    
+    .nav-menu .nav-link:hover {
+        background-color: var(--light-color);
+        color: var(--primary-color);
+        transform: translateX(10px);
+    }
+    
+    .nav-menu .nav-link::after {
+        display: none;
     }
     
     .nav-menu.active {

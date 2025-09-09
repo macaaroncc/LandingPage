@@ -90,24 +90,64 @@ function initializeMobileMenu() {
     const navMenu = document.querySelector('.nav-menu');
     
     if (hamburger && navMenu) {
-        hamburger.addEventListener('click', function() {
+        hamburger.addEventListener('click', function(e) {
+            e.stopPropagation();
             hamburger.classList.toggle('active');
             navMenu.classList.toggle('active');
+            
+            // Prevenir scroll del body cuando el menú está abierto
+            if (navMenu.classList.contains('active')) {
+                document.body.style.overflow = 'hidden';
+            } else {
+                document.body.style.overflow = 'auto';
+            }
         });
         
         // Cerrar menú al hacer click en un enlace
         const navLinks = document.querySelectorAll('.nav-link');
         navLinks.forEach(link => {
             link.addEventListener('click', () => {
-                hamburger.classList.remove('active');
-                navMenu.classList.remove('active');
+                closeMenu();
             });
+        });
+        
+        // Cerrar menú al hacer click fuera del mismo
+        document.addEventListener('click', function(e) {
+            if (!hamburger.contains(e.target) && !navMenu.contains(e.target)) {
+                if (navMenu.classList.contains('active')) {
+                    closeMenu();
+                }
+            }
+        });
+        
+        // Cerrar menú con tecla Escape
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape' && navMenu.classList.contains('active')) {
+                closeMenu();
+            }
+        });
+        
+        // Función para cerrar el menú
+        function closeMenu() {
+            hamburger.classList.remove('active');
+            navMenu.classList.remove('active');
+            document.body.style.overflow = 'auto';
+        }
+        
+        // Cerrar menú si la pantalla se redimensiona a desktop
+        window.addEventListener('resize', function() {
+            if (window.innerWidth > 768 && navMenu.classList.contains('active')) {
+                closeMenu();
+            }
         });
     }
 }
 
 // ===== ANIMACIONES DE SCROLL =====
 function initializeScrollAnimations() {
+    // Elementos a animar
+    const elementsToAnimate = document.querySelectorAll('.service-card, .pricing-card, .step, .testimonial-card');
+    
     // Intersection Observer para animaciones
     const observerOptions = {
         threshold: 0.1,
@@ -182,8 +222,27 @@ function initializeContactForm() {
     
     if (form) {
         form.addEventListener('submit', function(e) {
-            e.preventDefault();
-            handleFormSubmission(this);
+            // Validar antes de enviar
+            if (!validateForm(this)) {
+                e.preventDefault();
+                showNotification('Por favor, completa todos los campos requeridos', 'error');
+                return false;
+            }
+            
+            // Si la validación pasa, permitir el envío y mostrar mensaje
+            const submitBtn = this.querySelector('button[type="submit"]');
+            submitBtn.classList.add('loading');
+            submitBtn.disabled = true;
+            submitBtn.textContent = 'Enviando...';
+            
+            showNotification('¡Formulario enviado correctamente! Te contactaremos pronto 🚀', 'success');
+            
+            // Tracking
+            const formData = new FormData(this);
+            trackEvent('form_submission', {
+                plan: formData.get('plan'),
+                source: 'novaclick_landing'
+            });
         });
         
         // Validación en tiempo real
@@ -202,27 +261,27 @@ function handleFormSubmission(form) {
     // Validar formulario
     if (!validateForm(form)) {
         showNotification('Por favor, completa todos los campos requeridos', 'error');
-        return;
+        return false;
     }
     
     // Mostrar estado de carga
     submitBtn.classList.add('loading');
     submitBtn.disabled = true;
+    submitBtn.textContent = 'Enviando...';
     
-    // Simular envío (en producción conectarías con tu backend)
+    // El formulario se enviará automáticamente a Formspree
+    // Mostrar mensaje de confirmación después de un breve delay
     setTimeout(() => {
-        submitBtn.classList.remove('loading');
-        submitBtn.disabled = false;
+        showNotification('¡Formulario enviado! Te contactaremos pronto 🚀', 'success');
         
-        showNotification('¡Mensaje enviado correctamente! Te contactaremos pronto 🚀', 'success');
-        form.reset();
-        
-        // Analytics tracking (opcional)
+        // Analytics tracking
         trackEvent('form_submission', {
             plan: formData.get('plan'),
-            source: 'landing_page'
+            source: 'novaclick_landing'
         });
-    }, 2000);
+    }, 500);
+    
+    return true; // Permitir que el formulario se envíe
 }
 
 function validateForm(form) {
@@ -322,12 +381,43 @@ function mostrarDemo() {
         <div class="demo-modal">
             <div class="demo-content">
                 <div class="demo-header">
-                    <h2>🚀 Demo Interactivo</h2>
+                    <h2>🚀 Ejemplos Reales de Nuestro Trabajo</h2>
                     <button class="close-demo" onclick="cerrarDemo()">&times;</button>
                 </div>
                 <div class="demo-body">
                     <div class="demo-preview">
-                        <h3>Ejemplos de Nuestro Trabajo</h3>
+                        <h3>Casos de Éxito Reales</h3>
+                        
+                        <!-- Ejemplo destacado - Tavolo Casa -->
+                        <div class="featured-demo">
+                            <div class="demo-screenshot">
+                                <div class="browser-mockup">
+                                    <div class="browser-bar">
+                                        <div class="browser-dots"></div>
+                                        <div class="browser-url">tavolocasainfo.com</div>
+                                    </div>
+                                    <div class="demo-content-preview">
+                                        <div class="demo-header-preview">Tavolo Casa</div>
+                                        <div class="demo-text">Los mejores precios en almohadas</div>
+                                        <div class="demo-button">Ver Productos</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="demo-details">
+                                <h4><i class="fas fa-bed"></i> Tavolo Casa</h4>
+                                <p class="demo-description">Landing page para empresa de almohadas y productos de descanso</p>
+                                <div class="demo-results">
+                                    <span class="result-item">📈 +250% Ventas Online</span>
+                                    <span class="result-item">📱 100% Responsive</span>
+                                    <span class="result-item">⚡ Carga Ultra Rápida</span>
+                                </div>
+                                <a href="https://tavolocasainfo.com" target="_blank" class="demo-link">
+                                    <i class="fas fa-external-link-alt"></i> Ver Sitio Web
+                                </a>
+                            </div>
+                        </div>
+                        
+                        <!-- Otros ejemplos -->
                         <div class="demo-examples">
                             <div class="demo-example">
                                 <div class="demo-thumbnail">
@@ -351,8 +441,9 @@ function mostrarDemo() {
                                 <p>+180% membresías</p>
                             </div>
                         </div>
+                        
                         <div class="demo-cta">
-                            <p>¿Quieres ver tu negocio aquí?</p>
+                            <p>¿Quieres ver tu negocio con resultados así?</p>
                             <button class="btn btn-primary" onclick="scrollToSection('contacto'); cerrarDemo();">¡Sí, quiero mi landing page!</button>
                         </div>
                     </div>
@@ -525,13 +616,206 @@ demoStyles.textContent = `
     .demo-content {
         background: white;
         border-radius: 20px;
-        max-width: 600px;
-        max-height: 80vh;
+        max-width: 800px;
+        max-height: 90vh;
         overflow-y: auto;
         position: relative;
         z-index: 3001;
         animation: modalSlideIn 0.4s ease-out;
         box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+    }
+    
+    /* Estilos para el ejemplo destacado */
+    .featured-demo {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 2rem;
+        margin: 2rem 0;
+        padding: 2rem;
+        background: linear-gradient(135deg, #f8fafc, #e2e8f0);
+        border-radius: 16px;
+        border: 2px solid #e5e7eb;
+    }
+    
+    .demo-screenshot {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    
+    .browser-mockup {
+        background: white;
+        border-radius: 12px;
+        box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+        overflow: hidden;
+        width: 100%;
+        max-width: 300px;
+    }
+    
+    .browser-bar {
+        background: #f1f5f9;
+        padding: 12px 16px;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        border-bottom: 1px solid #e2e8f0;
+    }
+    
+    .browser-dots {
+        display: flex;
+        gap: 6px;
+    }
+    
+    .browser-dots::before {
+        content: '';
+        width: 12px;
+        height: 12px;
+        background: #ef4444;
+        border-radius: 50%;
+        display: block;
+    }
+    
+    .browser-dots::after {
+        content: '';
+        width: 12px;
+        height: 12px;
+        background: #f59e0b;
+        border-radius: 50%;
+        display: block;
+        margin-left: 6px;
+    }
+    
+    .browser-url {
+        background: white;
+        padding: 6px 12px;
+        border-radius: 6px;
+        font-size: 0.8rem;
+        color: #64748b;
+        border: 1px solid #e2e8f0;
+        flex: 1;
+        text-align: center;
+    }
+    
+    .demo-content-preview {
+        padding: 2rem 1.5rem;
+        text-align: center;
+        min-height: 120px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        gap: 12px;
+    }
+    
+    .demo-header-preview {
+        font-size: 1.2rem;
+        font-weight: bold;
+        color: #1e293b;
+        margin-bottom: 8px;
+    }
+    
+    .demo-text {
+        color: #64748b;
+        font-size: 0.9rem;
+        margin-bottom: 12px;
+    }
+    
+    .demo-button {
+        background: linear-gradient(135deg, #6366f1, #764ba2);
+        color: white;
+        padding: 8px 16px;
+        border-radius: 8px;
+        font-size: 0.8rem;
+        display: inline-block;
+        font-weight: 600;
+    }
+    
+    .demo-details {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    }
+    
+    .demo-details h4 {
+        font-size: 1.5rem;
+        color: #1e293b;
+        margin-bottom: 0.5rem;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+    }
+    
+    .demo-details h4 i {
+        color: #6366f1;
+    }
+    
+    .demo-description {
+        color: #64748b;
+        margin-bottom: 1.5rem;
+        line-height: 1.5;
+    }
+    
+    .demo-results {
+        display: flex;
+        flex-direction: column;
+        gap: 0.75rem;
+        margin-bottom: 1.5rem;
+    }
+    
+    .result-item {
+        background: rgba(99, 102, 241, 0.1);
+        color: #4338ca;
+        padding: 0.5rem 0.75rem;
+        border-radius: 8px;
+        font-size: 0.9rem;
+        font-weight: 600;
+        border-left: 3px solid #6366f1;
+    }
+    
+    .demo-link {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        background: linear-gradient(135deg, #6366f1, #764ba2);
+        color: white;
+        padding: 0.75rem 1.5rem;
+        border-radius: 8px;
+        text-decoration: none;
+        font-weight: 600;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        align-self: flex-start;
+    }
+    
+    .demo-link:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 25px rgba(99, 102, 241, 0.3);
+        color: white;
+        text-decoration: none;
+    }
+    
+    /* Responsive para el demo destacado */
+    @media (max-width: 768px) {
+        .demo-content {
+            max-width: 95vw;
+            margin: 0 10px;
+        }
+        
+        .featured-demo {
+            grid-template-columns: 1fr;
+            gap: 1.5rem;
+            text-align: center;
+        }
+        
+        .browser-mockup {
+            max-width: 250px;
+        }
+        
+        .demo-results {
+            align-items: center;
+        }
+        
+        .demo-link {
+            align-self: center;
+        }
     }
     
     .demo-backdrop {
